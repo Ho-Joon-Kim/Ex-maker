@@ -33,12 +33,14 @@ exports.answer = (async (ctx,next) => {
   const pin = ctx.request.body.pin;
   const sub_name = ctx.request.body.sub_name;
   const answer = ctx.request.body.answer;
+  const rate = ctx.request.body.rate;
   let check = true;
 
   const answer_f = (async () =>{
     for (let i = 0; i < answer.length; i++) {
       await connection.query(`UPDATE element SET q${i+1} = q${i+1} + ${answer[i]} WHERE pin = ${pin} AND sub_name = '${sub_name}';`);
     }
+
     await log.questioninsert(pin, sub_name, id, answer);
   });
 
@@ -53,6 +55,36 @@ exports.answer = (async (ctx,next) => {
   });
 
   await answer_f_auth();
+  ctx.status = 201;
+  ctx.body = {check : check};
+});
+
+//평점 api 
+exports.rate = (async (ctx,next) => {
+  const id = ctx.request.body.id;
+  const pin = ctx.request.body.pin;
+  const sub_name = ctx.request.body.sub_name;
+  const rate_var = ctx.request.body.rate;
+  let check = true;
+
+  const rate = (async () =>{
+    
+    await connection.query(`UPDATE element SET rate = ${rate_var} WHERE pin = ${pin} AND sub_name = '${sub_name}';`);
+
+    await log.questioninsert(pin, sub_name, id, rate_var);
+  });
+
+  const rate_auth = (async () =>{
+    let rows = await connection.query(`SELECT survey_u FROM element WHERE pin = ${pin} AND sub_name = '${sub_name}';`);
+    let arr = rows[0]['survey_u'].split(',');
+
+    for (let i = 0; i < arr.length; i++) {
+      if(arr[i] == sub_name){ check = false; }
+    }
+    if(check) { await rate(); }
+  });
+
+  await rate_auth();
   ctx.status = 201;
   ctx.body = {check : check};
 });
