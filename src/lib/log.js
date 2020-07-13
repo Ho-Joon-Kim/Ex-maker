@@ -17,6 +17,15 @@ exports.questioninsert = (async(pin, sub_name, id, answer) => {
   return true; 
 });
 
+//평점 로그 
+exports.rateinsert = (async(pin, sub_name, id, answer) => {
+  let code = '평점 입력';
+  
+  await connection.query(`INSERT INTO logs (code, pin, sub_name, id, answer) VALUES ('${code}','${pin}','${sub_name}','${id}','${answer}');`);
+
+  return true; 
+});
+
 //객체 설문 완료 로그 
 exports.elementsurveyend = (async(pin, sub_name, id) => {
   let code = '객체 설문 완료';

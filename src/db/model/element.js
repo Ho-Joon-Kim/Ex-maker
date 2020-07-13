@@ -54,7 +54,7 @@ module.exports = (Sequelize, sequelize) => {
     },
 
     rate: {//평점
-      type: Sequelize.TEXT,
+      type: Sequelize.INTEGER,
       allowNull: true
     },
 

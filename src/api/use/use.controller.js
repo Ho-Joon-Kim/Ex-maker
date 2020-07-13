@@ -18,7 +18,7 @@ exports.loadpage = (async (ctx,next) => {
   let contents;
 
   const loadpage = (async () =>{
-    let rows = await connection.query(`SELECT * FROM survey WHERE pin = ${pin};`);
+    let rows = await connection.query(`SELECT * FROM survey WHERE pin = '${pin}';`);
     contents = rows[0]
   });
 
@@ -38,14 +38,14 @@ exports.answer = (async (ctx,next) => {
 
   const answer_f = (async () =>{
     for (let i = 0; i < answer.length; i++) {
-      await connection.query(`UPDATE element SET q${i+1} = q${i+1} + ${answer[i]} WHERE pin = ${pin} AND sub_name = '${sub_name}';`);
+      await connection.query(`UPDATE elements SET q${i+1} = q${i+1} + ${answer[i]} WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
     }
 
     await log.questioninsert(pin, sub_name, id, answer);
   });
 
   const answer_f_auth = (async () =>{
-    let rows = await connection.query(`SELECT survey_u FROM element WHERE pin = ${pin} AND sub_name = '${sub_name}';`);
+    let rows = await connection.query(`SELECT survey_u FROM elements WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
     let arr = rows[0]['survey_u'].split(',');
 
     for (let i = 0; i < arr.length; i++) {
@@ -69,17 +69,20 @@ exports.rate = (async (ctx,next) => {
 
   const rate = (async () =>{
     
-    await connection.query(`UPDATE element SET rate = ${rate_var} WHERE pin = ${pin} AND sub_name = '${sub_name}';`);
+    await connection.query(`UPDATE elements SET rate = ${rate_var} WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
 
     await log.questioninsert(pin, sub_name, id, rate_var);
   });
 
   const rate_auth = (async () =>{
-    let rows = await connection.query(`SELECT survey_u FROM element WHERE pin = ${pin} AND sub_name = '${sub_name}';`);
+    let rows = await connection.query(`SELECT survey_u FROM elements WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
     let arr = rows[0]['survey_u'].split(',');
 
     for (let i = 0; i < arr.length; i++) {
-      if(arr[i] == sub_name){ check = false; }
+      if(arr[i] == sub_name){ 
+        console.log(arr[i]);
+        check = false; 
+      }
     }
     if(check) { await rate(); }
   });
@@ -95,7 +98,7 @@ exports.send = (async (ctx,next) => {
   const pin = ctx.request.body.pin;
 
   const send = (async () =>{
-    await connection.query(`UPDATE survey SET survey_u = 'survey_u,${id}' WHERE pin = ${pin};`);
+    await connection.query(`UPDATE survey SET survey_u = 'survey_u,${id}' WHERE pin = '${pin}';`);
     await log.surveyend(pin,id);
   });
 
@@ -111,7 +114,8 @@ exports.sendelement = (async (ctx,next) => {
   const sub_name = ctx.request.body.sub_name;
 
   const sendelement = (async () =>{
-    await connection.query(`UPDATE element SET survey_u = 'survey_u,${id}' WHERE pin = ${pin} AND sub_name = ${sub_name};`);
+    let rows = await connection.query(`SELECT survey_u FROM elements WHERE pin = '${pin}' AND sub_name = ${sub_name};`);
+    await connection.query(`UPDATE elements SET survey_u = '${rows[0]['survey_u']},${id}' WHERE pin = '${pin}' AND sub_name = ${sub_name};`);
     await log.elementsurveyend(pin,sub_name,id);
   });
 
