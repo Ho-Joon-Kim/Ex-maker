@@ -16,16 +16,17 @@ exports.loadpage = (async (ctx,next) => {
   const pin = ctx.request.body.pin;
   const id = ctx.request.body.id;
   let contents;
-  let check = false;
+  let check = true;
   let arr
 
   const loadpage = (async () =>{
-    let rows = await connection.query(`SELECT * FROM survey WHERE pin = '${pin}';`);
+    let rows = await connection.query(`SELECT * FROM surveys WHERE pin = '${pin}';`);
     contents = rows[0]
+
     arr = rows[0]['survey_u'].split(',');
 
     for (let i = 0; i < arr.length; i++) {
-      if(arr[i] == sub_name){ 
+      if(arr[i] == id){ 
         console.log(arr[i]);
         check = false; 
       }
@@ -79,8 +80,8 @@ exports.rate = (async (ctx,next) => {
   let check = true;
 
   const rate = (async () =>{
-    
-    await connection.query(`UPDATE elements SET rate = ${rate_var} WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
+    let rows = await connection.query(`SELECT rate FROM elements WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
+    await connection.query(`UPDATE elements SET rate = ${rows[0]['rate']} + ${rate_var} WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
 
     await log.rateinsert(pin, sub_name, id, rate_var);
   });
