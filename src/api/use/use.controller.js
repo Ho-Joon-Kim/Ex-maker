@@ -16,15 +16,26 @@ exports.loadpage = (async (ctx,next) => {
   const pin = ctx.request.body.pin;
   const id = ctx.request.body.id;
   let contents;
+  let check = false;
+  let arr
 
   const loadpage = (async () =>{
     let rows = await connection.query(`SELECT * FROM survey WHERE pin = '${pin}';`);
     contents = rows[0]
+    arr = rows[0]['survey_u'].split(',');
+
+    for (let i = 0; i < arr.length; i++) {
+      if(arr[i] == sub_name){ 
+        console.log(arr[i]);
+        check = false; 
+      }
+    }
+
   });
 
   await loadpage();
   ctx.status = 200;
-  ctx.body = {contents : contents};
+  ctx.body = {contents : contents, check : check};
 });
 
 //질문 답변api 
@@ -71,7 +82,7 @@ exports.rate = (async (ctx,next) => {
     
     await connection.query(`UPDATE elements SET rate = ${rate_var} WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
 
-    await log.questioninsert(pin, sub_name, id, rate_var);
+    await log.rateinsert(pin, sub_name, id, rate_var);
   });
 
   const rate_auth = (async () =>{
