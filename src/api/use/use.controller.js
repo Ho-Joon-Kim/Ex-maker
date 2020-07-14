@@ -98,7 +98,8 @@ exports.send = (async (ctx,next) => {
   const pin = ctx.request.body.pin;
 
   const send = (async () =>{
-    await connection.query(`UPDATE survey SET survey_u = 'survey_u,${id}' WHERE pin = '${pin}';`);
+    let rows = await connection.query(`SELECT survey_u FROM surveys WHERE pin = '${pin}';`);
+    await connection.query(`UPDATE surveys SET survey_u = '${rows[0]['survey_u']},${id}' WHERE pin = '${pin}';`);
     await log.surveyend(pin,id);
   });
 
