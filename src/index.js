@@ -24,8 +24,7 @@ app.use(koaBody());//json 형식 파싱용
 
 app.use(serve(path.resolve(__dirname, './public')));
 router.get('/',(ctx) => {
-  ctx.type = 'html';
-  ctx.render = (__dirname,'./public/index.html');
+  ctx.body = indexHtml;
 });
 
 
