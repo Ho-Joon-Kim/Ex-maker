@@ -19,7 +19,7 @@ exports.loadpage = (async (ctx,next) => {
   let check = true;
   let arr
 
-  const loadpage = (async () =>{
+  const loadpage = async () =>{
     let rows = await connection.query(`SELECT * FROM surveys WHERE pin = '${pin}';`);
     contents = rows[0]
 
@@ -32,7 +32,7 @@ exports.loadpage = (async (ctx,next) => {
       }
     }
 
-  });
+  };
 
   await loadpage();
   ctx.status = 200;
@@ -61,7 +61,8 @@ exports.answer = (async (ctx,next) => {
     let arr = rows[0]['survey_u'].split(',');
 
     for (let i = 0; i < arr.length; i++) {
-      if(arr[i] == sub_name){ check = false; }
+      console.log(arr[i]);
+      if(arr[i] == id){ check = false; }
     }
     if(check) { await answer_f(); }
   });
