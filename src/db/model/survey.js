@@ -17,7 +17,7 @@ module.exports = (Sequelize, sequelize) => {
       allowNull: false
     },
 
-    option: {//옵션
+    optiona: {//옵션
       type: Sequelize.TEXT,
       allowNull: false
     },
@@ -37,7 +37,7 @@ module.exports = (Sequelize, sequelize) => {
       allowNull: true
     },
 
-    view: {//조회수
+    views: {//조회수
       type: Sequelize.INTEGER,
       allowNull: false
     }

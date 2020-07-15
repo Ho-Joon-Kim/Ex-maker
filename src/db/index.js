@@ -7,7 +7,7 @@ require('dotenv').config()//환경변수를 코드에서 제거하기 위한 모
 const sequelize = new Sequelize(process.env.database , process.env.user, process.env.password, {
   host: process.env.host,
   dialect: 'mariadb',
-  dialectOptions: { timezone: 'Etc/GMT-9'},
+  dialectOptions: { timezone: 'Etc/GMT+9'},
   define: {
   timestamps: false,
   charset:'utf8',
