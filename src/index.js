@@ -22,7 +22,7 @@ app.use(koaBody());//json 형식 파싱용
 
 router.get('/',(ctx) => {
   ctx.type = 'html';
-  ctx.body = createReadStream('./src/public/index.html');
+  ctx.render = ('./src/public/index.html');
 });
 
 

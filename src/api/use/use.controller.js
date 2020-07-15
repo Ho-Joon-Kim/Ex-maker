@@ -36,7 +36,6 @@ exports.loadpage = (async (ctx,next) => {
 
   await loadpage();
 
-  connection.release();
   ctx.status = 200;
   ctx.body = {contents : contents, check : check};
 });
@@ -71,7 +70,7 @@ exports.answer = (async (ctx,next) => {
 
   await answer_f_auth();
 
-  connection.release();
+  
   ctx.status = 201;
   ctx.body = {check : check};
 });
@@ -106,7 +105,7 @@ exports.rate = (async (ctx,next) => {
 
   await rate_auth();
 
-  connection.release();
+  
   ctx.status = 201;
   ctx.body = {check : check};
 });
@@ -124,7 +123,7 @@ exports.send = (async (ctx,next) => {
 
   await send();
 
-  connection.release();
+  
   ctx.status = 201;
   ctx.body = {check : true};
 });
@@ -143,7 +142,7 @@ exports.sendelement = (async (ctx,next) => {
 
   await sendelement();
 
-  connection.release();
+  
   ctx.status = 201;
   ctx.body = {check : true};
 });
