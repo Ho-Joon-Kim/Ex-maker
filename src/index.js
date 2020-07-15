@@ -9,7 +9,7 @@ const cors = require('@koa/cors');
 
 const fs = require('fs');
 const path = require('path');
-
+//const render = require('./server/render/index.js');
 
 const app = new Koa();
 const router = new Router();
