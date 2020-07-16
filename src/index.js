@@ -16,21 +16,17 @@ const models = db.models;
 
 const api = require('./api');
 
-const indexHtml = fs.readFileSync(path.resolve(__dirname, './public/index.html'), { encoding: 'utf8' });
 app.use(cors());
 app.use(logger());//http 메소드 로거 사용
 app.use(koaBody());//json 형식 파싱용
 
 
-/*
-app.use(serve(path.resolve(__dirname, './public')));
+
 
 router.get('/',(ctx) => {
-  ctx.body = indexHtml;
-   ctx.render = (__dirname,'./public/index.html');
+  ctx.body = "hello";
 });
 
-*/
 
 
 
