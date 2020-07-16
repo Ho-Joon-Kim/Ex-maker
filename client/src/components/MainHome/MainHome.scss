@@ -1,0 +1,51 @@
+.main-link {
+  text-decoration: none;
+  color: white;
+}
+
+.home-back {
+  margin: 0;
+  padding: 0;
+  -ms-user-select: none;
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  user-select:none;
+
+  .home-contents {
+    position: absolute;
+    left: 20%;
+    top: 40%;
+    transform: translateX(-20%) translateY(-40%);
+
+    .main-title {
+      font-size: 70px;
+      font-weight: bold;
+      margin-bottom: 50px;
+    }
+
+    .main-buttons {
+
+      button{
+        width: 160px;
+        height: 70px;
+        margin-right: 30px;
+        background-color: #C4C4C4;
+        border: none;
+        font-size: 30px;
+        color: white;
+        border-radius: 10px;
+        outline: none;
+        cursor:pointer;
+
+        &:hover {
+          background-color: #009688;
+        }
+      }
+
+      .pin-button {
+        background-color: #009688;
+      }
+    }
+  }
+}

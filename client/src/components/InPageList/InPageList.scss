@@ -1,0 +1,44 @@
+.img-insert{
+  border: 1.5px solid #ABABAB;
+  width: 440px;
+  height: 500 auto;
+  margin-left: 25px;
+  margin-bottom: 10px;
+
+  .choos-img {
+    margin-top: 20px;
+    max-width: 400px;
+    height: auto;
+    background-color: #ABABAB;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+
+  .imageinput{
+    margin-top: 20px;
+
+    .choose {
+      color: #ABABAB;
+      font-size: 12px;
+      margin-left: 20px;
+      margin-right: 200px;
+    }
+
+    #imgFile {
+      margin: 10px 20px;
+      width: 300px;
+      height: 25px;
+      font-size: 12px;
+    }
+  }
+}
+.subtitle {
+  border: 1.5px solid #ABABAB;
+  width: 400px;
+  height: 500 auto;
+  margin-left: 25px;
+  margin-bottom: 10px;
+  padding: 5px 20px;
+  font-size: 20px;
+  word-break: keep-all;
+}

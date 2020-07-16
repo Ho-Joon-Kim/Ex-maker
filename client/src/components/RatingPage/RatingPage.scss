@@ -1,0 +1,32 @@
+.rating-back {
+  border: 1.5px solid #ABABAB;
+  width: 440px;
+  height: 50px;
+  margin-left: 25px;
+  margin-bottom: 10px;
+
+  h4 {
+    margin: 10px 20px;
+    position: relative;
+    top: 4px;
+  }
+  .starRev{
+    width: 170px;
+    position: relative;
+    top: -30px;
+    float: right;
+
+    .starR{
+      background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+      background-size: auto 100%;
+      width: 30px;
+      height: 30px;
+      display: inline-block;
+      text-indent: -9999px;
+      cursor: pointer;
+    }
+    .starR.on{
+      background-position:0 0;
+    }
+  }
+}

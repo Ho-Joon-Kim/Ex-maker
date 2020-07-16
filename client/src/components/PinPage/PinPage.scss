@@ -1,0 +1,117 @@
+.pin-back {
+
+  .pin-before {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    transform: translateX(-1%) translateY(-1%);
+    font-size: 50px;
+    font-weight: bold;
+    color: #009688;
+    cursor: pointer;
+  }
+
+  .pin-contents {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-40%);
+
+    div {
+      font-size: 50px;
+      color: #009688;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .pin-input {
+      text-align: center;
+      position: relative;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 50px;
+      font-size: 25px;
+      border: 1px solid #ABABAB;
+      border-radius: 10px;
+    }
+
+    .pin-submit {
+      text-align: center;
+      position: absolute;
+      top: 240px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      background-color: #009688;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 100px;
+      padding: 5px 10px;
+      width: 180px;
+      height: 60px;
+      cursor: pointer;
+    }
+  }
+}
+
+.nick-back {
+
+  .nick-before {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    transform: translateX(-1%) translateY(-1%);
+    font-size: 50px;
+    font-weight: bold;
+    color: #009688;
+    cursor: pointer;
+  }
+
+  .nick-contents {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-40%);
+
+    div {
+      font-size: 50px;
+      color: #009688;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .nick-input {
+      text-align: center;
+      position: relative;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 50px;
+      font-size: 25px;
+      border: 1px solid #ABABAB;
+      border-radius: 10px;
+    }
+
+    .nick-submit {
+      text-align: center;
+      position: absolute;
+      top: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      background-color: #009688;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 100px;
+      padding: 5px 10px;
+      width: 180px;
+      height: 60px;
+      cursor: pointer;
+    }
+  }
+}
