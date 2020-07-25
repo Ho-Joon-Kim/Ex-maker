@@ -172,11 +172,11 @@ exports.loadcomment = (async (ctx,next) => {
   const subname = ctx.request.body.subname;
   let rows;
 
-  const commentwrite = (async () =>{
+  const loadcomment = (async () =>{
     rows = await connection.query(`SELECT id,comment FROM comments WHERE pin = '${pin}', subname = '${subname}';`);
   });
 
-  await commentwrite();
+  await loadcomment();
 
 
   ctx.status = 200;
