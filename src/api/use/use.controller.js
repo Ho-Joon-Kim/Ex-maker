@@ -110,10 +110,10 @@ exports.rate = (async (ctx,next) => {
   ctx.body = {check : check};
 });
 
-//평점 불러오가api 
+//평점 불러오가api O
 exports.loadrate = (async (ctx,next) => {
-  const id = ctx.request.body.id;
   const pin = ctx.request.body.pin;
+  const sub_name = ctx.request.body.sub_name;
   let rate = 0;
 
   const loadrate = (async () =>{
@@ -149,7 +149,7 @@ exports.send = (async (ctx,next) => {
   ctx.body = {check : true};
 });
 
-//댓글쓰기api 
+//댓글쓰기api O
 exports.comment = (async (ctx,next) => {
   const id = ctx.request.body.id;
   const pin = ctx.request.body.pin;
@@ -166,14 +166,14 @@ exports.comment = (async (ctx,next) => {
   ctx.body = {check : true};
 });
 
-//댓글 불러오기api 
+//댓글 불러오기api O
 exports.loadcomment = (async (ctx,next) => {
   const pin = ctx.request.body.pin;
   const subname = ctx.request.body.subname;
   let rows;
 
   const loadcomment = (async () =>{
-    rows = await connection.query(`SELECT id,comment FROM comments WHERE pin = '${pin}', subname = '${subname}';`);
+    rows = await connection.query(`SELECT id,comment FROM comments WHERE pin = '${pin}' AND subname = '${subname}';`);
   });
 
   await loadcomment();

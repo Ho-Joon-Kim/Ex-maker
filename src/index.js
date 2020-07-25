@@ -6,6 +6,7 @@ const serve = require('koa-static');
 const db = require('./db');
 const {createReadStream} = require('fs');
 const cors = require('@koa/cors');
+const dotenv = require('dotenv').config()//환경변수를 코드에서 제거하기 위한 모듈
 
 const fs = require('fs');
 const path = require('path');
