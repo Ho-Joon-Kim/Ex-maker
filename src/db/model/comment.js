@@ -13,7 +13,12 @@ module.exports = (Sequelize, sequelize) => {
       allowNull: false
     },
 
-    location: {//댓글 위치
+    pin: {//댓글 핀
+      type: Sequelize.TEXT,
+      allowNull: false
+    },
+
+    subname: {//댓글 부제
       type: Sequelize.TEXT,
       allowNull: false
     },

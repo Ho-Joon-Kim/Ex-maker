@@ -151,9 +151,18 @@ exports.send = (async (ctx,next) => {
 
 //댓글쓰기api 
 exports.comment = (async (ctx,next) => {
+  const id = ctx.request.body.id;
+  const pin = ctx.request.body.pin;
+  const subname = ctx.request.body.subname;
+  const comment = ctx.request.body.comment;
 
+  const commentwrite = (async () =>{
+    await connection.query(`INSERT INTO comment(id,pin,subname,comment) values('${id}','${pin}','${subname}','${comment}');`);
+    await log.surveyend(pin,id);
+  });
 
-  
+  await commentwrite();
+
   ctx.status = 201;
   ctx.body = {check : true};
 });
