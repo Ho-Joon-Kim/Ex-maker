@@ -157,8 +157,7 @@ exports.comment = (async (ctx,next) => {
   const comment = ctx.request.body.comment;
 
   const commentwrite = (async () =>{
-    await connection.query(`INSERT INTO comment(id,pin,subname,comment) values('${id}','${pin}','${subname}','${comment}');`);
-    await log.surveyend(pin,id);
+    await connection.query(`INSERT INTO comments(id,pin,subname,comment) values('${id}','${pin}','${subname}','${comment}');`);
   });
 
   await commentwrite();
@@ -169,11 +168,19 @@ exports.comment = (async (ctx,next) => {
 
 //댓글 불러오기api 
 exports.loadcomment = (async (ctx,next) => {
+  const pin = ctx.request.body.pin;
+  const subname = ctx.request.body.subname;
+  let rows;
+
+  const commentwrite = (async () =>{
+    rows = await connection.query(`SELECT id,comment FROM comments WHERE pin = '${pin}', subname = '${subname}';`);
+  });
+
+  await commentwrite();
 
 
-  
-  ctx.status = 201;
-  ctx.body = {check : true};
+  ctx.status = 200;
+  ctx.body = {comment : rows};
 });
 
 
