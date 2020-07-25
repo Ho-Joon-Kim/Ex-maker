@@ -40,7 +40,7 @@ exports.loadpage = (async (ctx,next) => {
   ctx.body = {contents : contents, check : check};
 });
 
-//질문 답변api 
+//질문 답변api  O
 exports.answer = (async (ctx,next) => {
   const id = ctx.request.body.id;
   const pin = ctx.request.body.pin;
@@ -75,7 +75,7 @@ exports.answer = (async (ctx,next) => {
   ctx.body = {check : check};
 });
 
-//평점 api 
+//평점 api O
 exports.rate = (async (ctx,next) => {
   const id = ctx.request.body.id;
   const pin = ctx.request.body.pin;
@@ -110,7 +110,28 @@ exports.rate = (async (ctx,next) => {
   ctx.body = {check : check};
 });
 
-//평가완료api 
+//평점 불러오가api 
+exports.loadrate = (async (ctx,next) => {
+  const id = ctx.request.body.id;
+  const pin = ctx.request.body.pin;
+  let rate = 0;
+
+  const loadrate = (async () =>{
+    let rows = await connection.query(`SELECT rate,survey_u FROM elements WHERE pin = '${pin}' AND sub_name = ${sub_name};`);
+    let arr = rows[0]['survey_u'].split(',');
+
+    if(arr.length > 0){
+      rate = rows[0]['rate']/arr.length;
+    }
+  });
+  await loadrate();
+
+  
+  ctx.status = 200;
+  ctx.body = {rate : rate};
+});
+
+//평가완료api O
 exports.send = (async (ctx,next) => {
   const id = ctx.request.body.id;
   const pin = ctx.request.body.pin;
@@ -128,21 +149,23 @@ exports.send = (async (ctx,next) => {
   ctx.body = {check : true};
 });
 
-//평가완료 객체api 
-exports.sendelement = (async (ctx,next) => {
-  const id = ctx.request.body.id;
-  const pin = ctx.request.body.pin;
-  const sub_name = ctx.request.body.sub_name;
+//댓글쓰기api 
+exports.comment = (async (ctx,next) => {
 
-  const sendelement = (async () =>{
-    let rows = await connection.query(`SELECT survey_u FROM elements WHERE pin = '${pin}' AND sub_name = ${sub_name};`);
-    await connection.query(`UPDATE elements SET survey_u = '${rows[0]['survey_u']},${id}' WHERE pin = '${pin}' AND sub_name = ${sub_name};`);
-    await log.elementsurveyend(pin,sub_name,id);
-  });
-
-  await sendelement();
 
   
   ctx.status = 201;
   ctx.body = {check : true};
 });
+
+//댓글 불러오기api 
+exports.loadcomment = (async (ctx,next) => {
+
+
+  
+  ctx.status = 201;
+  ctx.body = {check : true};
+});
+
+
+
