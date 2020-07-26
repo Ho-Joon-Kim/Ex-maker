@@ -34,4 +34,4 @@ router.get('/',(ctx) => {
 router.use('/api', api.routes()); // api 라우트를 /api 경로 하위 라우트로 설정
 app.use(router.routes()).use(router.allowedMethods());
 app.listen(process.env.serverport,process.env.serverhost);
-console.log(`Running on http://localhost:3000`);
+console.log(`Running on http://localhost:${process.env.serverport}`);

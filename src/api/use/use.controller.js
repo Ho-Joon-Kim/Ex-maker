@@ -95,9 +95,9 @@ exports.rate = (async (ctx,next) => {
     let arr = rows[0]['survey_u'].split(',');
 
     for (let i = 0; i < arr.length; i++) {
-      if(arr[i] == sub_name){ 
-        console.log(arr[i]);
+      if(arr[i] == id){ 
         check = false; 
+        break;
       }
     }
     if(check) { await rate(); }
@@ -111,7 +111,7 @@ exports.rate = (async (ctx,next) => {
 });
 
 //평점 불러오가api O
-exports.loadrate = (async (ctx,next) => {
+exports.rateche = (async (ctx,next) => {
   const pin = ctx.request.body.pin;
   const sub_name = ctx.request.body.sub_name;
   let rate = 0;
@@ -121,14 +121,14 @@ exports.loadrate = (async (ctx,next) => {
     let arr = rows[0]['survey_u'].split(',');
 
     if(arr.length > 0){
-      rate = rows[0]['rate']/arr.length;
+      rate = rows[0]['rate']/(arr.length-1);
     }
   });
   await loadrate();
 
   
   ctx.status = 200;
-  ctx.body = {rate : rate};
+  ctx.body = {rate : rate.toFixed(1)};
 });
 
 //평가완료api O
@@ -149,11 +149,41 @@ exports.send = (async (ctx,next) => {
   ctx.body = {check : true};
 });
 
+//평가완료 객체api O
+exports.sendelement = (async (ctx,next) => {
+  const id = ctx.request.body.id;
+  const pin = ctx.request.body.pin;
+  const sub_name = ctx.request.body.sub_name;
+  let check = true;
+  
+  const sendelement = (async () =>{
+    let rows = await connection.query(`SELECT survey_u FROM elements WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
+    await connection.query(`UPDATE elements SET survey_u = '${rows[0]['survey_u']},${id}' WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
+  });
+
+  const sendelement_auth = (async () =>{
+    let rows = await connection.query(`SELECT survey_u FROM elements WHERE pin = '${pin}' AND sub_name = '${sub_name}';`);
+    let arr = rows[0]['survey_u'].split(',');
+
+    for (let i = 0; i < arr.length; i++) {
+      console.log(arr[i]);
+      if(arr[i] == id){ check = false; }
+    }
+    if(check) { await sendelement(); }
+  });
+
+  await sendelement_auth();
+
+  
+  ctx.status = 201;
+  ctx.body = {check : check};
+});
+
 //댓글쓰기api O
 exports.comment = (async (ctx,next) => {
   const id = ctx.request.body.id;
   const pin = ctx.request.body.pin;
-  const subname = ctx.request.body.subname;
+  const subname = ctx.request.body.sub_name;
   const comment = ctx.request.body.comment;
 
   const commentwrite = (async () =>{
@@ -169,7 +199,7 @@ exports.comment = (async (ctx,next) => {
 //댓글 불러오기api O
 exports.loadcomment = (async (ctx,next) => {
   const pin = ctx.request.body.pin;
-  const subname = ctx.request.body.subname;
+  const subname = ctx.request.body.sub_name;
   let rows;
 
   const loadcomment = (async () =>{
@@ -180,7 +210,7 @@ exports.loadcomment = (async (ctx,next) => {
 
 
   ctx.status = 200;
-  ctx.body = {comment : rows};
+  ctx.body = {comment : rows, commentmany : rows.length};
 });
 
 
